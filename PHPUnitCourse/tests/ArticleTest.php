@@ -26,31 +26,55 @@ class ArticleTest extends TestCase
 
     }
 
-    public function testSlugHasSpacesReplacedByUnderscores()
-    {
-        $this->article->title = "An example article";
+    // public function testSlugHasSpacesReplacedByUnderscores()
+    // {
+    //     $this->article->title = "An example article";
 
-        $this->assertEquals($this->article->getSlug(), "An_example_article");
+    //     $this->assertEquals($this->article->getSlug(), "An_example_article");
+    // }
+
+    // public function testSlugHasWhitespaceReplaceBySingleUnderscore()
+    // {
+    //     $this->article->title = "An     example   \n    article";
+
+    //     $this->assertEquals($this->article->getSlug(), "An_example_article");
+    // }
+
+    // public function testSlugDoesNotStartOrEndWithAnUnderscore()
+    // {
+    //     $this->article->title = " An example article ";
+
+    //     $this->assertEquals($this->article->getSlug(), "An_example_article");
+    // }
+
+    // public function testSlugDoesNotHaveAnyNonWordCharacters()
+    // {
+    //     $this->article->title = "Read! This! Now!";
+
+    //     $this->assertEquals($this->article->getSlug(), "Read_This_Now");
+    // }
+
+    public function titleProvider()
+    {
+        return [
+            'Slug Has Spaces Replaced By Underscores'
+            => ["An example article", "An_example_article"],
+            'Slug Has Whitespace Replace By Single Underscore'
+            =>["An     example   \n    article", "An_example_article"],
+            'Slug Does Not Start Or End With An Underscore'
+            =>[" An example article ", "An_example_article"],
+            'Slug Does Not Have Any Non Word Characters'
+            =>["Read! This! Now!", "Read_This_Now"]
+        ];
     }
 
-    public function testSlugHasWhitespaceReplaceBySingleUnderscore()
+    /**
+     * @dataProvider titleProvider
+     */
+    public function testSlug($title, $slug)
     {
-        $this->article->title = "An     example   \n    article";
+        $this->article->title = $title;
 
-        $this->assertEquals($this->article->getSlug(), "An_example_article");
-    }
-
-    public function testSlugDoesNotStartOrEndWithAnUnderscore()
-    {
-        $this->article->title = " An example article ";
-
-        $this->assertEquals($this->article->getSlug(), "An_example_article");
-    }
-
-    public function testSlugDoesNotHaveAnyNonWordCharacters()
-    {
-        $this->article->title = "Read! This! Now!";
-
-        $this->assertEquals($this->article->getSlug(), "Read_This_Now");
+        $this->assertEquals($this->article->getSlug(), $slug);
     }
 }
