@@ -14,8 +14,6 @@ class User2
      */
     public $email;
 
-    protected $mailer_callable;
-
     /**
      * Constructor
      * 
@@ -28,11 +26,6 @@ class User2
         $this->email = $email;
     }
 
-    public function setMailerCallable(callable $mailer_callable)
-    {
-        $this->mailer_callable = $mailer_callable;
-    }
-
     /**
      * Send the user amessage
      * 
@@ -42,6 +35,6 @@ class User2
      */
     public function notify(string $message)
     {
-       return call_user_func($this->mailer_callable, $this->email, $message);
+        return Mailer2::send($this->email, $message);
     }
 }
