@@ -12,6 +12,8 @@ class Article
 
        $slug = preg_replace('/\s+/', '_', $slug);
 
+       $slug = preg_replace('/[^\w]+/', '', $slug);
+
        $slug = trim($slug, "_");
 
        return $slug;
