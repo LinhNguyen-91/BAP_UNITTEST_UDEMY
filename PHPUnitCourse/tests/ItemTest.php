@@ -21,9 +21,16 @@ class ItemTest extends TestCase
 
     public function testTokenIsAString()
     {
-        $item = new ItemChild;
+        $item = new Item;
 
-        $this->assertIsString($item->getToken());
+        $reflector = new ReflectionClass(Item::class);
+
+        $method = $reflector->getMethod('getToken');
+        $method->setAccessible(true);
+
+        $result = $method->invoke($item);
+
+        $this->assertIsString($result);
     }
 
     public static function assertIsString($actual, string $message = ''): void
