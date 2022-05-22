@@ -10,7 +10,7 @@ class ArticleTest extends TestCase
     {
 
         $this->article = new App\Article;
-        
+
     }
     public function testTitleIsEmptyByDefault()
     {
@@ -29,6 +29,20 @@ class ArticleTest extends TestCase
     public function testSlugHasSpacesReplacedByUnderscores()
     {
         $this->article->title = "An example article";
+
+        $this->assertEquals($this->article->getSlug(), "An_example_article");
+    }
+
+    public function testSlugHasWhitespaceReplaceBySingleUnderscore()
+    {
+        $this->article->title = "An     example   \n    article";
+
+        $this->assertEquals($this->article->getSlug(), "An_example_article");
+    }
+
+    public function testSlugDoesNotStartOrEndWithAnUnderscore()
+    {
+        $this->article->title = " An example article ";
 
         $this->assertEquals($this->article->getSlug(), "An_example_article");
     }
